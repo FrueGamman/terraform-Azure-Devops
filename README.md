@@ -473,10 +473,10 @@ git push
 
 ## Step-15: Review Build (CI) Pipeline  and Release Pipeline(CD) Logs
 ### Verify Build Pipeline Logs
-- Go to  Azure DevOps -> Organization (stacksimplify1) -> Project (terraform-on-azure-with-azure-devops) -> Pipelines -> Pipelines -> Terraform Continuous Integration CI Pipeline
+- Go to  Azure DevOps -> Organization  -> Project  -> Pipelines -> Pipelines -> Terraform Continuous Integration CI Pipeline
 
 ### Verify Release Pipeline Logs
-- Go to  Azure DevOps -> Organization (stacksimplify1) -> Project (terraform-on-azure-with-azure-devops) -> Pipelines -> Releases -> Terraform CD
+- Go to  Azure DevOps -> Organization -> Project  -> Pipelines -> Releases -> Terraform CD
 
 
 ## Step-16: Verify Dev Resources created in Azure Portal
