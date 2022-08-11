@@ -394,7 +394,7 @@ git pull
 - Rest all leave to defaults
 #### Task-1: Terraform Tool Installer   
 - **Display Name:** Install Terraform latest version
-- **Version:** 1.0.5 (as on today)
+- **Version:** (latest)
 - **Important Note:** Get latest terraform version number from [Terraform Downloads page](https://www.terraform.io/downloads.html)
 
 #### Task-2: Terraform: init
