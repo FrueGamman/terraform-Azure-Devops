@@ -1,9 +1,7 @@
 ---
-title: Azure IaC DevOps for Terraform Project
-description: Create Azure IaC DevOps for Terraform Project
+title: IaC Terraform Azure DevOps Project
+description: Terraform Project with Azure
 ---
-
-## Step-00: Introduction
 ### Build Pipeline - CI
 - Implement Build Pipeline (Continuous Integration Pipeline)
 - Use `CopyFiles` and `PublishArtifacts` Tasks in Build Pipeline
@@ -17,10 +15,9 @@ description: Create Azure IaC DevOps for Terraform Project
   - terraform apply -auto-approve
 - Test both CI CD Pipelines  
 
-- [Azure DevOps Parallelism Free Tier Request Form](https://forms.office.com/pages/responsepage.aspx?id=v4j5cvGGr0GRqy180BHbR63mUWPlq7NEsFZhkyH8jChUMlM3QzdDMFZOMkVBWU5BWFM3SDI2QlRBSC4u)
 
 ## Step-01: Review Terraform Configs
-- **Folder:** Git-Repo-Files/terraform-manifests
+- **Folder:**
 
 ### Step-01-01: c1-versions.tf
 ```t
@@ -202,8 +199,8 @@ web_linuxvm_admin_user = "azureuser"
 ### Step-02-01: Create new github Repository
 - **URL:** github.com
 - Click on **Create a new repository**
-- **Repository Name:** terraform-on-azure-with-azure-devops
-- **Description:** Terraform on Azure with Azure IaC DevOps
+- **Repository Name:** 
+- **Description:**
 - **Repo Type:** Public / Private
 - **Initialize this repository with:**
 - **CHECK** - Add a README file
@@ -217,14 +214,12 @@ web_linuxvm_admin_user = "azureuser"
 ```t
 # Clone Github Repo
 git clone https://github.com/<YOUR_GITHUB_ID>/<YOUR_REPO>.git
-git clone https://github.com/stacksimplify/terraform-on-azure-with-azure-devops.git
+
 ```
 
-## Step-02-03: Copy files from Git-Repo-Files folder to local repo & Check-In Code
+## Step-02-03: Copy files from terraform-manifests folder to local repo Or write the script needed & Check-In Code
 
-- **Source Location:** Git-Repo-Files
-- **Destination Location:** Copy all folders and files from `Git-Repo-Files` newly cloned github repository folder in your local desktop `terraform-on-azure-with-azure-devops`
-- **Check-In code to Remote Repository**
+
 ```t
 # GIT Status
 git status
@@ -236,37 +231,14 @@ git commit -am "First Commit"
 # Push to Remote Repository
 git push
 
-# Verify the same on Remote Repository
-https://github.com/stacksimplify/terraform-on-azure-with-azure-devops.git
-```
-## Step-03: Terraform Dependency Lock File Concept
-- Understand [Terraform Dependency Lock File Concept](https://www.terraform.io/docs/language/dependency-lock.html)
-- For detailed understanding we need to reference this topic from our [Demo-67: Azure HashiCorp Terraform Associate Certification course](https://github.com/stacksimplify/hashicorp-certified-terraform-associate-on-azure/tree/main/67-Terraform-Manage-Providers). Primarily refer [Step-04](https://github.com/stacksimplify/hashicorp-certified-terraform-associate-on-azure/tree/main/67-Terraform-Manage-Providers#step-04-command-terraform-providers-lock) and [Step-05](https://github.com/stacksimplify/hashicorp-certified-terraform-associate-on-azure/tree/main/67-Terraform-Manage-Providers#step-05-command-terraform-providers-lock-for-all-supported-platforms) of this section
-```t
-# Go to Local Git Repo 
-cd demo-repos
-cd terraform-on-azure-with-azure-devops/terraform-manifests
 
 # Delete `.terraform.lock.hcl`
 Delete file if exists "`.terraform.lock.hcl`"
-rm -rf .terraform.lock.hcl  # Explicitly for students to get latest version of Providers on that respective day when you are learning this module
+rm -rf .terraform.lock.hcl 
 
 # Terraform Providers lock for multiple platforms
 terraform providers lock -platform=windows_amd64 -platform=darwin_amd64 -platform=linux_amd64
 
-# Terraform Initialize
-terraform init
-Observation: 
-1. Provider plugins downloaded to ".terraform folder"
-2. `.terraform.lock.hcl` created with command `terraform providers lock` used by `terraform init` to download those respective providers
-3. We need to check-in this file `.terraform.lock.hcl` with our TF Configs to Git Repos for IaC DevOps Pipelines to ensure our provider versions doesnt get upgraded to latest versions and break our application. 
-
-# Delete ".terraform" folder
-rm -rf .terraform 
-
-# We will ensure we are checking in `.terraform.lock.hcl`
-`.terraform.lock.hcl`
-
 # GIT Status
 git status
 
@@ -276,13 +248,9 @@ git commit -am "First Commit"
 
 # Push to Remote Repository
 git push
-
-# Verify the same on Remote Repository
-https://github.com/stacksimplify/terraform-on-azure-with-azure-devops.git
 ```
-
-## Step-04: Create Azure DevOps Organization
-### Step-04-01: Create Azure DevOps Organization
+## Step-03: Create Azure DevOps Organization
+### Step-03-01: Create Azure DevOps Organization
 - Understand about [Azure DevOps Agents and Free-Tier Limits](https://docs.microsoft.com/en-us/azure/devops/pipelines/licensing/concurrent-jobs?view=azure-devops&tabs=ms-hosted)
 - Navigate to `https://dev.azure.com`
 - Click on `Sign in to Azure DevOps`
@@ -290,38 +258,37 @@ https://github.com/stacksimplify/terraform-on-azure-with-azure-devops.git
   - Username: XXXXXXXXXXXXXX
   - Password: XXXXXXXXXXXXXX
 - Click on create **New Organization**
-- **Name your Azure DevOps organization:** stacksimplify1
-- **We'll host your projects in:** Choose the location (Azure selects based on current location where you are accessing from)
-- **Enter the characters you see:** 
+- **Give a name to Azure DevOps organization:** xxxxxx
+- **Host your projects in:** Choose the location (Azure selects based on current location )
+- **Enter the given characters :** 
 - Click on **Continue**
 
-### Step-04-02: Request for Azure DevOps Parallelism
-- [Azure DevOps Parallelism Free Tier Request Form](https://forms.office.com/pages/responsepage.aspx?id=v4j5cvGGr0GRqy180BHbR63mUWPlq7NEsFZhkyH8jChUMlM3QzdDMFZOMkVBWU5BWFM3SDI2QlRBSC4u)
 
 
-## Step-05: Install Terraform Extension for Azure DevOps
+## Step-04: Install Terraform Extension for Azure DevOps
+- In Azure devops go to marketplace: search for Terraform microsoft devlabs
 - [Terraform Extension for Azure DevOps](https://marketplace.visualstudio.com/items?itemName=ms-devlabs.custom-terraform-tasks)
 
-## Step-06: Create New Project in Azure DevOps Organization
+## Step-05: Create New Project in Azure DevOps Organization
 - Create a New Project in Azure DevOps Organization newly created
 - Click on **New Project**
-- **Project Name:** terraform-on-azure-with-azure-devops
-- **Description:** terraform-on-azure-with-azure-devops
-- **Visibility:** Private
+- **Project Name:** 
+- **Description:** 
+- **Visibility:** Private /Public
 - Click on **Create**
 
-## Step-07: Understand Azure Pipelines
+## Step-06: Understand Azure Pipelines
 - Understand about Azure Pipelines
 - Pipeline Hierarchial Flow: `Stages -> Stage -> Jobs -> Job -> Steps -> Task1, Task2`
 
-## Step-08: Create Azure CI (Continuous Integration) Pipeline (Build Pipeline)
-- Go to  Azure DevOps -> Organization (stacksimplify1) -> Project (terraform-on-azure-with-azure-devops) -> Pipelines -> Pipelines
+## Step-07: Create Azure CI (Continuous Integration) Pipeline (Build Pipeline)
+- Go to  Azure DevOps -> Organization (The name given to the organization) -> Project (name of the project) -> Pipelines -> Pipelines
 - Click on **New Pipeline**
-- **Where is your code?:** GitHub
+- **Find the project Repo:** GitHub or any repo in use
 - Follow browser redirect steps to integrate with Github Account
-- **Select a repository:** stacksimplify/terraform-on-azure-with-azure-devops
-- **Configure your pipeline:** Starter Pipeline
-- Rename the Pipeline file name to `01-terraform-azure-devops-ci-pipeline`
+- **Select a repository:** repo in use
+- **Configure pipeline:** Starter Pipeline
+- Rename the Pipeline file name to `name of choice`
 - Build the below code using two tasks listed below
   - Copy Files
   - Publish Artifacts
@@ -371,23 +338,23 @@ stages:
 - Verify First Run logs
 - Rename the Pipeline name to `Terraform Continuous Integration CI Pipeline`
 
-## Step-09: Sync Local Git Repo
-- A new file named `01-terraform-azure-devops-ci-pipeline.yaml` will be added git Remote Repo
-- Sync the same thing to your local Git Repo
+## Step-08: Sync Local Git Repo
+- A new file named `the give choise name` will be added git Remote Repo
+- Sync the same thing to own local Git Repo
 ```t
 # Local Git Repo
 git pull
 ```
 
-## Step-10: Azure Release Pipelines Introduction
+## Step-09: Azure Release Pipelines Introduction
 1. Understand Azure Release Pipelines
 2. What are we going to implement as part of Release Pipelines ?
 3. Review the Infra we are going to provision. 
 4. Understand where Terraform State files will be stored for 4 environments. 
 5. Demonstrate Continuous Delivery by making a change to our TF Configs atleast for one environment (Prod)
 
-## Step-11: Create Azure Resource Manager Service Connection for Azure DevOps
-- Go to  Azure DevOps -> Organization (stacksimplify1) -> Project (terraform-on-azure-with-azure-devops) > Project Settings -> Pipelines -> Service Connections
+## Step-10: Create Azure Resource Manager Service Connection for Azure DevOps
+- Go to  Azure DevOps -> Organization  -> Project -> Project Settings -> Pipelines -> Service Connections
 - Click on **New Service Connection**
 - **Choose a service or connection type:** Azure Resource Manager
 - **Authentication Method:** Service principal (automatic)
@@ -401,9 +368,9 @@ git pull
 - **Security:** CHECK Grant access permission to all pipelines (leave to default checked)
 - Click on **Save**
 
-## Step-12: Create Storage Account for storing Terraform State Files
+## Step-11: Create Storage Account for storing Terraform State Files
 - Create Storage Account, Storage Container if not created.
-- We have already created that as part of [Section-24-Step-02](https://github.com/stacksimplify/terraform-on-azure-cloud/tree/main/24-Terraform-Remote-State-Storage#step-02-create-azure-storage-account) which will re-use here. 
+ 
 ```t
 # Terraform State Storage to Azure Storage Container
     resource_group_name   = "terraform-storage-rg"
@@ -412,13 +379,13 @@ git pull
     key                   = "dev-terraform.tfstate"
 ```
 
-## Step-13: Release Pipelines - Create Dev Stage
-- Go to  Azure DevOps -> Organization (stacksimplify1) -> Project (terraform-on-azure-with-azure-devops) -> Pipelines -> Releases
+## Step-12: Release Pipelines - Create Dev Stage
+- Go to  Azure DevOps -> Organization  -> Project  -> Pipelines -> Releases
 - Click on **New Release Pipeline**
 - **Pipeline Name:** Terraform-CD
 ### Dev Stage
 - **Stage Name:** Dev Stage
-- **Stage Owner:** stacksimplify@gmail.com (your-azure-admin-id)
+- **Stage Owner:**  (your-azure-admin-id)
 - Click on **1 Job, 0 Task**
 #### Agent Job
 - **Display Name:** Terraform Ubuntu Agent
@@ -458,7 +425,7 @@ git pull
 - **Command:** plan
 - **Configuration directory:** Select by browsing it (Example: $(System.DefaultWorkingDirectory)/_Terraform Continuous Integration CI Pipeline/terraform-manifests)
 - **Additional command arguments:** -var-file=dev.tfvars
-- **Azure subscription:** terraformiacdevops1 (Select the service connection created in step-10)
+- **Azure subscription:** terraformiacdevops1 (Select the service connection created in step-9)
 - Rest all leave to defaults
 
 #### Task-5: Terraform: apply -auto-approve
@@ -473,22 +440,22 @@ git pull
 - Click on **Save* to save the release-pipeline. 
 
 
-## Step-14: Release Pipeline - Artifacts Settings
-- Go to  Azure DevOps -> Organization (stacksimplify1) -> Project (terraform-on-azure-with-azure-devops) -> Pipelines -> Releases -> Terraform-CD
-### Step-14-01: Add Artifacts
+## Step-13: Release Pipeline - Artifacts Settings
+- Go to  Azure DevOps -> Organization  -> Project  -> Pipelines -> Releases -> Terraform-CD
+### Step-13-01: Add Artifacts
 - Click on **Add Artifacts**
 - **Source Type:** Build
-- **Project:** terraform-on-azure-with-azure-devops
+- **Project:** 
 - **Source (build pipeline):** Terraform Continuous Integration CI Pipeline
 - **Default version:** Latest (leave to default)
 - **Source alias:** _Terraform Continuous Integration CI Pipeline (leave to default)
 - Click on **Add**
 
-### Step-14-02: Enable Continuous deployment trigger
+### Step-13-02: Enable Continuous deployment trigger
 - **Continuous deployment trigger:** Enabled
 - Rest all leave to defaults
 
-## Step-15: Trigger Build (CI) and Release (CD) Pipelines
+## Step-14: Trigger Build (CI) and Release (CD) Pipelines
 - Make a minor change in git repo and push the changes from local git repo
 ```t
 ## In any file add some changes
@@ -504,7 +471,7 @@ git commit -am "CICD-Test-1"
 git push
 ```
 
-## Step-16: Review Build (CI) Pipeline  and Release Pipeline(CD) Logs
+## Step-15: Review Build (CI) Pipeline  and Release Pipeline(CD) Logs
 ### Verify Build Pipeline Logs
 - Go to  Azure DevOps -> Organization (stacksimplify1) -> Project (terraform-on-azure-with-azure-devops) -> Pipelines -> Pipelines -> Terraform Continuous Integration CI Pipeline
 
@@ -512,7 +479,7 @@ git push
 - Go to  Azure DevOps -> Organization (stacksimplify1) -> Project (terraform-on-azure-with-azure-devops) -> Pipelines -> Releases -> Terraform CD
 
 
-## Step-17: Verify Dev Resources created in Azure Portal
+## Step-16: Verify Dev Resources created in Azure Portal
 ### Verify dev-terraform.tfsate file
 - Go to Storaage Accounts -> terraform-rg-storage -> terraformstate201 -> tfstatefiles
 - Verify the file `dev-terraform.tfstate`
@@ -522,8 +489,8 @@ git push
 3. Azure Public IP
 4. Azure Linux Virtual Machine
 
-## Step-18: Create Stages listed below by cloning Dev Stage in Releases
-- Go to  Azure DevOps -> Organization (stacksimplify1) -> Project (terraform-on-azure-with-azure-devops) -> Pipelines -> Releases -> Terraform CD -> Edit
+## Step-17: Create Stages listed below by cloning Dev Stage in Releases
+- Go to  Azure DevOps -> Organization  -> Project -> Pipelines -> Releases -> Terraform CD -> Edit
 - Updates include the following for QA, Stage and Prod
 ### Task-1: Terraform: init
 - Update `Key` to respective environment
@@ -541,11 +508,11 @@ git push
 - **Stage Additional command arguments:** -var-file=stage.tfvars -auto-approve
 - **Prod Additional command arguments:** -var-file=prod.tfvars -auto-approve
 
-## Step-19: Add Pre-Deployment Approval and Post Deployment Approvals
+## Step-18: Add Pre-Deployment Approval and Post Deployment Approvals
 - **Pre-Deployment Approvals:** QA, Stage and Prod
 - **Post-Deployment Approvals:** Stage
 
-## Step-20: Trigger Build (CI) and Release (CD) Pipelines
+## Step-19: Trigger Build (CI) and Release (CD) Pipelines
 - Make a minor change in git repo and push the changes from local git repo
 ```t
 ## In any file add some changes
@@ -562,7 +529,7 @@ git push
 ```
 
 
-## Step-21: Verify Resources created in Azure Portal for QA, Stage and Prod Environments
+## Step-20: Verify Resources created in Azure Portal for QA, Stage and Prod Environments
 ### Verify TFState File for Dev, QA and Prod
 - Go to Storaage Accounts -> terraform-rg-storage -> terraformstate201 -> tfstatefiles
 - Verify the files listed below
@@ -575,7 +542,7 @@ git push
 3. Azure Public IP
 4. Azure Linux Virtual Machine
 
-## Step-22: Change web_linuxvm_admin_user to Prod Environment
+## Step-21: Change web_linuxvm_admin_user to Prod Environment
 ```t
 # File: prod.tfvars
 #web_linuxvm_admin_user = "azureuser"
@@ -591,12 +558,12 @@ git commit -am "Changed Prod VM adminuser name to produser"
 git push
 ```
 
-## Step-23: Review Build (CI) Pipeline  and Release Pipeline(CD) Logs
+## Step-22: Review Build (CI) Pipeline  and Release Pipeline(CD) Logs
 ### Verify Build Pipeline Logs
-- Go to  Azure DevOps -> Organization (stacksimplify1) -> Project (terraform-on-azure-with-azure-devops) -> Pipelines -> Pipelines -> Terraform Continuous Integration CI Pipeline
+- Go to  Azure DevOps -> Organization  -> Project  -> Pipelines -> Pipelines -> Terraform Continuous Integration CI Pipeline
 
 ### Verify Release Pipeline Logs
-- Go to  Azure DevOps -> Organization (stacksimplify1) -> Project (terraform-on-azure-with-azure-devops) -> Pipelines -> Releases -> Terraform CD
+- Go to  Azure DevOps -> Organization  -> Project -> Pipelines -> Releases -> Terraform CD
 - **Dev Stage:** Review Logs
 - **QA Stage:** Approve (Pre-Deployment Approval) and Review Logs
 - **Staging Stage:** Approve (Pre-Deployment Approval) and Review logs and also do Post-Deployment Approval
@@ -610,12 +577,12 @@ git push
 ssh -i ssh-keys/terraform-azure.pem produser@<Prod-VM-Public-IP>
 ```
 
-## Step-24: Disable Build (CI) Pipeline
-- Go to  Azure DevOps -> Organization (stacksimplify1) -> Project (terraform-on-azure-with-azure-devops) -> Pipelines -> Pipelines -> Terraform Continuous Integration CI Pipeline
+## Step-23: Disable Build (CI) Pipeline
+- Go to  Azure DevOps -> Organization  -> Project  -> Pipelines -> Pipelines -> Terraform Continuous Integration CI Pipeline
 - Settings -> Disabled -> Click on **Save**
 - This will help us if by any chance you made any accidental commits to your git repo we don't get any unexpected surprise azure bills. 
 
-## Step-25: Delete Resources or Clean-Up
+## Step-24: Delete Resources or Clean-Up
 ### Delete Resources
 - Go to Azure Portal -> Resource Groups -> Delete Resource Groups for All Environments
 - Dev
