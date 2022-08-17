@@ -1,18 +1,18 @@
 # Terraform Block
 terraform {
-  required_version = ">= 1.0.0"
+  required_version = " latest"
   required_providers {
     azurerm = {
       source = "hashicorp/azurerm"
-      version = ">= 2.0" 
+      version = "lastest" 
     }
     random = {
       source = "hashicorp/random"
-      version = ">= 3.0"
+      version = "latest"
     }
     null = {
       source = "hashicorp/null"
-      version = ">= 3.0"
+      version = "latest"
     }    
   }
 # Terraform State Storage to Azure Storage Container (Values will be taken from Azure DevOps)
