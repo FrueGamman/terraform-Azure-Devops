@@ -25,7 +25,7 @@ terraform {
   }   
 }
 
-# Provider Block
+# Provider Block we can 
 provider "azurerm" {
  features {}          
 }
